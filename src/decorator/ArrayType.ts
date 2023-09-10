@@ -1,5 +1,8 @@
-import {getArrayType} from "./DecoratorData";
-import Serializable from "../Serializable";
+import Serializable, {assertSerializable} from "../Serializable";
+import "reflect-metadata"
+import {Constructor} from "../UtilType";
+
+export const arrayTypeSymbol = Symbol("ArrayType");
 
 /**
  * 数组类型
@@ -8,10 +11,9 @@ import Serializable from "../Serializable";
  * @param obj 类型对象
  * @constructor
  */
-const ArrayType: {
-    (obj: Serializable): PropertyDecorator
-} = (obj: Serializable) => (target, propertyKey) => {
-    getArrayType(target).set(propertyKey, obj.getPrototype());
+function ArrayType(obj: Constructor<Serializable>): PropertyDecorator {
+    assertSerializable(obj);
+    return Reflect.metadata(arrayTypeSymbol, obj);
 }
 
 export default ArrayType;

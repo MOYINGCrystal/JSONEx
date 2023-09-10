@@ -1,5 +1,7 @@
-export default class SerializableNotSupportError extends Error{
-    constructor() {
-        super("对象不是可序列化对象！");
+import {Constructor} from "./UtilType";
+
+export default class SerializableNotSupportError extends Error {
+    constructor(obj: Constructor<any>) {
+        super(`${obj}不是可序列化对象！`);
     }
 }

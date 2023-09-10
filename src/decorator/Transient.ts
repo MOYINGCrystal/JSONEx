@@ -1,7 +1,7 @@
-import {getTransient} from "./DecoratorData";
+import "reflect-metadata";
 
-const Transient: PropertyDecorator = (target, propertyKey) => {
-    getTransient(target).add(propertyKey);
-}
+export const transientSymbol = Symbol("Transient");
+
+const Transient: PropertyDecorator = Reflect.metadata(transientSymbol,true);
 
 export default Transient;

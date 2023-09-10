@@ -1,15 +1,18 @@
 import type Serializable from "./Serializable";
+import "reflect-metadata";
+import {Constructor} from "./UtilType";
+import {arrayTypeSymbol} from "./decorator/ArrayType";
+import {assertSerializable} from "./Serializable";
 
 export class JSONEx<T extends Serializable> {// TODO 支持Map Set
-    type: T;
-
-    constructor(type: T) {
-        this.type = <T>type.getPrototype();
+    constructor(public type: Constructor<T>) {
+        assertSerializable(this.type);
     }
 
     public parse(text: string, reviver?: (this: any, key: string, value: any) => any): T {
         let parse = JSON.parse(text);
-        this.setPrototype(parse, this.type);
+        Object.setPrototypeOf(parse, this.type.prototype);
+        this.setPrototype(parse, this.type.prototype);
         return parse;
     }
 
@@ -23,29 +26,30 @@ export class JSONEx<T extends Serializable> {// TODO 支持Map Set
         return JSON.stringify(value, this.replacer);
     }
 
-    private setPrototype(obj: any, type: any) {
-        let typeStr = Object.prototype.toString.call(type);
-        if (typeStr === "[object Object]") {
-            let constructor = type.constructor;
-            if(constructor == Map){
-                // TODO
-            }
-            Object.setPrototypeOf(obj, constructor.prototype);
-            for (const key of Reflect.ownKeys(obj)) {
-                this.setPrototype(obj[key], type[key]);
-            }
-            return;
+    private setPrototype(obj: any, type: Object) {
+        let constructor = type.constructor;
+        if (constructor == Map) {
+            // TODO
         }
-        if (typeStr === "[object Array]") {
-            if (!type[0]) return;
-            let constructor = type[0].constructor;
-            (<Array<any>>obj).forEach(value => {
-                Object.setPrototypeOf(value, constructor.prototype);
-                for (const key of Reflect.ownKeys(value)) {
-                    this.setPrototype(value[key], type[0][key]);
-                }
-            });
-            return;
+        for (const key of Reflect.ownKeys(obj)) {
+            let subObj = obj[key];
+            let typeStr = Object.prototype.toString.call(subObj);
+            if (typeStr === "[object Object]") {
+                let proto = Reflect.getMetadata("design:type", type, key)?.prototype;
+                if (!proto) continue;
+                Object.setPrototypeOf(subObj, proto);
+                this.setPrototype(subObj, proto);
+                continue;
+            }
+            if (subObj instanceof Array) {
+                let proto = Reflect.getMetadata(arrayTypeSymbol, type, key)?.prototype;
+                if (!proto) continue;
+                subObj.forEach(value => {
+                    Object.setPrototypeOf(value, proto);
+                    this.setPrototype(value, proto);
+                });
+                continue;
+            }
         }
         return;
     }

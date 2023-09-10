@@ -1,8 +1,10 @@
-import Serializable, {defaultImpl} from "../Serializable";
-import {ReturnCacheStatic} from "../decorator/ReturnCache";
+import {serializable} from "../Serializable";
 import Transient from "../decorator/Transient";
+import Implements from "../decorator/Implements";
+import "reflect-metadata";
 
-export default class B implements Serializable {
+@Implements(serializable)
+export default class B {
     @Transient
     bool = true;
 
@@ -13,8 +15,8 @@ export default class B implements Serializable {
         return this.n;
     }
 
-    @ReturnCacheStatic
-    getPrototype(): B {
-        return defaultImpl(this);
-    }
+    // @ReturnCacheStatic
+    // getPrototype(): B {
+    //     return defaultImpl(this);
+    // }
 }
