@@ -6,28 +6,25 @@ import {assertSerializable} from "./Serializable";
 import {transientSymbol} from "./decorator/Transient";
 import {setTypeSymbol} from "./decorator/SetType";
 import {mapTypeSymbol} from "./decorator/MapType";
+import StaticClass from "./decorator/StaticClass";
 
-export class JSONEx<T extends SerializableObject> {
-    constructor(public type: Constructor<T>) {
-        assertSerializable(this.type);
-    }
+// TODO 联合类型数组
 
-    public parse(text: string, reviver?: (this: any, key: string, value: any) => any): T {
+@StaticClass
+export class JSONEx {
+    public static parse<T extends SerializableObject>(text: string, type: Constructor<T>): T {
+        assertSerializable(type);
         let parse = JSON.parse(text, this.reviver);
-        Object.setPrototypeOf(parse, this.type.prototype);
-        this.setPrototype(parse, this.type.prototype);
+        Object.setPrototypeOf(parse, type.prototype);
+        this.setPrototype(parse, type.prototype);
         return parse;
     }
 
-    public stringify(value: T, replacer?: (this: any, key: string, value: any) => any, space?: string | number): string;
-
-    public stringify(value: T, replacer?: (number | string)[] | null, space?: string | number): string;
-
-    public stringify(value: T, replacer?: ((this: any, key: string, value: any) => any) | (number | string)[] | null, space?: string | number): string {
+    public static stringify<T extends SerializableObject>(value: T): string {
         return JSON.stringify(value, this.replacer);
     }
 
-    private setPrototype(obj: any, type: Object) {
+    private static setPrototype(obj: any, type: Object) {
         for (const key of Reflect.ownKeys(obj)) {
             let subObj = obj[key];
             let typeStr = Object.prototype.toString.call(subObj);
@@ -78,7 +75,7 @@ export class JSONEx<T extends SerializableObject> {
         return;
     }
 
-    private reviver(key: string, value: any) {
+    private static reviver(key: string, value: any) {
         const type = Object.prototype.toString.call(value);
         if (type === "[object Object]" || type === "[object Array]") {
             if (value["@"] === 'Map') {
@@ -91,7 +88,7 @@ export class JSONEx<T extends SerializableObject> {
         return value;
     }
 
-    private replacer(key: string, value: any) {
+    private static replacer(key: string, value: any) {
         if (Reflect.getMetadata(transientSymbol, this, key)) {
             return;
         }

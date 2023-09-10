@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import {Constructor} from "../UtilType";
 
-export const ImplSymbol = Symbol("Implements");
+const ImplSymbol = Symbol("Implements");
 
 function Implements(...interfaces: (string | symbol)[]): ClassDecorator {
     return Reflect.metadata(ImplSymbol, interfaces);

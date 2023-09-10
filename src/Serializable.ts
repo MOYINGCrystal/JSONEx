@@ -1,6 +1,6 @@
 import {Constructor} from "./UtilType";
 import SerializableNotSupportError from "./SerializableNotSupportError";
-import {ImplSymbol} from "./decorator/Implements";
+import {getImplements} from "./decorator/Implements";
 
 /**
  * 可序列化
@@ -34,7 +34,7 @@ export interface SerializableObject {
  * @param obj 对象
  */
 export function isSerializable(obj: Constructor<any>) {
-    return (<Array<symbol>>Reflect.getMetadata(ImplSymbol, obj)).includes(Serializable);
+    return getImplements(obj).includes(Serializable);
 }
 
 /**
@@ -45,6 +45,6 @@ export function isSerializable(obj: Constructor<any>) {
  * @throws SerializableNotSupportError
  */
 export function assertSerializable(obj: Constructor<any>) {
-    if ((<Array<symbol>>Reflect.getMetadata(ImplSymbol, obj)).includes(Serializable)) return;
+    if (getImplements(obj).includes(Serializable)) return;
     throw new SerializableNotSupportError(obj);
 }

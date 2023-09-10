@@ -12,7 +12,7 @@ export const mapTypeSymbol = Symbol("MapType");
  * @param valueType 值类型
  * @constructor
  */
-function MapType(keyType: Constructor<SerializableObject> | null, valueType?: Constructor<SerializableObject>): PropertyDecorator {
+function MapType(valueType: Constructor<SerializableObject> | null, keyType?: Constructor<SerializableObject>): PropertyDecorator {
     if (keyType)
         assertSerializable(keyType);
     if (valueType)

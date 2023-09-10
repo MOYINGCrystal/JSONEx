@@ -7,6 +7,7 @@ import SetType from "../decorator/SetType";
 import Serializable from "../Serializable";
 import MapType from "../decorator/MapType";
 
+// SerializableObject接口实现与否都无所谓，毕竟在typescript中接口都是虚拟的，只有元数据才是真实的
 @Implements(Serializable)
 export default class A {
     num: number = 2;
@@ -37,10 +38,13 @@ export default class A {
     @SetType(B)
     set: Set<B> = new Set<B>();
 
-    @MapType(null, B)
+    // 使用@MapType([键类型],[值类型])来设置引用变量Map的类型，不修饰的引用变量Map会被反序列化为Map<Object, Object>
+    // 键类型为基本数据类型时可用：
+    @MapType(B)
     map: Map<string, B> = new Map<string, B>();
 
-    @MapType(B)
+    // 值类型为基本数据类型时：
+    @MapType(null, B)
     map2: Map<B, number> = new Map();
 
     @MapType(B, B)
