@@ -1,4 +1,4 @@
-import Serializable, {assertSerializable} from "../Serializable";
+import {assertSerializable, SerializableObject} from "../Serializable";
 import "reflect-metadata"
 import {Constructor} from "../UtilType";
 
@@ -11,7 +11,7 @@ export const arrayTypeSymbol = Symbol("ArrayType");
  * @param obj 类型对象
  * @constructor
  */
-function ArrayType(obj: Constructor<Serializable>): PropertyDecorator {
+function ArrayType(obj: Constructor<SerializableObject>): PropertyDecorator {
     assertSerializable(obj);
     return Reflect.metadata(arrayTypeSymbol, obj);
 }

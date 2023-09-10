@@ -24,7 +24,7 @@
   ],
   "author": "END_Crystal",
   "license": "ISC",
-  "description": "",
+  "description": "JSON扩展",
   "umdModuleName": "JSONEx",
   "devDependencies": {
     "@rollup/plugin-alias": "^5.0.0",

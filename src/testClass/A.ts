@@ -1,14 +1,17 @@
 import B from "./B";
-import {serializable} from "../Serializable";
 import Transient from "../decorator/Transient";
 import ArrayType from "../decorator/ArrayType";
 import Implements from "../decorator/Implements";
 import AutoType from "../decorator/AutoType";
+import SetType from "../decorator/SetType";
+import Serializable from "../Serializable";
+import MapType from "../decorator/MapType";
 
-@Implements(serializable)
+@Implements(Serializable)
 export default class A {
     num: number = 2;
 
+    // 被@Transient修饰的属性，不会被序列化
     @Transient
     str: string = "临时变量";
 
@@ -26,14 +29,24 @@ export default class A {
     @AutoType
     bObj2 = new B(4);
 
+    // 使用@ArrayType([类型构造器])来设置引用变量数组的类型，不修饰的引用变量数组会被反序列化为Object[]
     @ArrayType(B)
     bArr: B[] = [];
 
-    @AutoType
+    // 使用@SetType([类型构造器])来设置引用变量Set的类型，不修饰的引用变量Set会被反序列化为Set<Object>
+    @SetType(B)
+    set: Set<B> = new Set<B>();
+
+    @MapType(null, B)
     map: Map<string, B> = new Map<string, B>();
 
-    @AutoType
-    set: Set<B> = new Set<B>();
+    @MapType(B)
+    map2: Map<B, number> = new Map();
+
+    @MapType(B, B)
+    map3: Map<B, B> = new Map();
+
+    map4: Map<string, number> = new Map();
 
     getNum(): number {
         return this.num;

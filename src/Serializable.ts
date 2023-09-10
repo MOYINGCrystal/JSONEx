@@ -13,7 +13,9 @@ import {ImplSymbol} from "./decorator/Implements";
  * 对于数组对象：
  * 数组元素类型无法为联合类型。
  */
-export const serializable = Symbol("Serializable");
+const Serializable = Symbol("Serializable");
+
+export default Serializable;
 
 /**
  * 可序列化
@@ -21,10 +23,10 @@ export const serializable = Symbol("Serializable");
  * @desc 标记接口
  *       要想真正实现可序列化
  *       需要对类添加修饰器：<code>@Implements(serializable)</code>
- * @see serializable
+ * @see Serializable
  * @see Implements
  */
-export default interface Serializable {
+export interface SerializableObject {
 }
 
 /**
@@ -32,7 +34,7 @@ export default interface Serializable {
  * @param obj 对象
  */
 export function isSerializable(obj: Constructor<any>) {
-    return (<Array<symbol>>Reflect.getMetadata(ImplSymbol, obj)).includes(serializable);
+    return (<Array<symbol>>Reflect.getMetadata(ImplSymbol, obj)).includes(Serializable);
 }
 
 /**
@@ -43,6 +45,6 @@ export function isSerializable(obj: Constructor<any>) {
  * @throws SerializableNotSupportError
  */
 export function assertSerializable(obj: Constructor<any>) {
-    if ((<Array<symbol>>Reflect.getMetadata(ImplSymbol, obj)).includes(serializable)) return;
+    if ((<Array<symbol>>Reflect.getMetadata(ImplSymbol, obj)).includes(Serializable)) return;
     throw new SerializableNotSupportError(obj);
 }
