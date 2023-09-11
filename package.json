@@ -1,19 +1,19 @@
 {
   "name": "jsonexend",
-  "version": "0.2.0",
-  "main": "./dist/cjs/index.js",
+  "version": "0.2.7",
+  "main": "./dist/cjs/index.cjs",
   "types": "./dist/cjs/index.d.ts",
   "module": "./dist/esm/index.js",
   "type": "module",
   "exports": {
     "import": "./dist/esm/index.js",
-    "require": "./dist/cjs/index.js"
+    "require": "./dist/cjs/index.cjs"
   },
   "scripts": {
     "debug": "start cmd /k pnpm run build:hot & pnpm run node:hot",
     "node:hot": "nodemon example.js --watch example.js",
     "build:hot": "pnpm rollup -c --watch",
-    "build": "pnpm run rollup:build && pnpm run commonjs",
+    "build": "rmdir /s/q .\\dist && pnpm run rollup:build && pnpm run commonjs",
     "rollup:build": "pnpm rollup -c",
     "build:publish": "pnpm run build && pnpm run publish",
     "commonjs": "copy .\\commonjs.json .\\dist\\cjs\\commmonjs.json",
@@ -41,9 +41,7 @@
   },
   "dependencies": {
     "@rollup/plugin-terser": "^0.4.3",
-    "event-message-center": "^1.3.3",
     "reflect-metadata": "^0.1.13",
-    "rollup-plugin-typescript2": "^0.35.0",
-    "task-queue-lib": "^1.3.2"
+    "rollup-plugin-typescript2": "^0.35.0"
   }
 }

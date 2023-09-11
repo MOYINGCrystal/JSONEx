@@ -1,4 +1,4 @@
-import Implements, {getImplements} from "../decorator/Implements";
+import Implements, {getImplements} from "../interface/Implements";
 
 @Implements("A", "B")
 class InterTest {

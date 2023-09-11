@@ -1,13 +1,14 @@
 import B from "./B";
 import Transient from "../decorator/Transient";
 import ArrayType from "../decorator/ArrayType";
-import Implements from "../decorator/Implements";
+import Implements from "../interface/Implements";
 import AutoType from "../decorator/AutoType";
 import SetType from "../decorator/SetType";
 import Serializable from "../Serializable";
 import MapType from "../decorator/MapType";
 
-// SerializableObject接口实现与否都无所谓，毕竟在typescript中接口都是虚拟的，只有元数据才是真实的
+// 必须使用装饰器实现(Implements)序列化(Serializable)：
+// 而SerializableObject接口实现与否都无所谓，毕竟在typescript中接口都是虚拟的，只有元数据才是真实的
 @Implements(Serializable)
 export default class A {
     num: number = 2;

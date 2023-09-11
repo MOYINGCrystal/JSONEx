@@ -1,5 +1,5 @@
 import Transient from "../decorator/Transient";
-import Implements from "../decorator/Implements";
+import Implements from "../interface/Implements";
 import "reflect-metadata";
 import Serializable from "../Serializable";
 

@@ -92,7 +92,13 @@ export class JSONEx {
         if (Reflect.getMetadata(transientSymbol, this, key)) {
             return;
         }
-        if (value instanceof Map) {
+        const type = Object.prototype.toString.call(value);
+        if (type === "[object Object]") {
+            const constructorName = value.constructor.name;
+            if (constructorName !== "Object") {
+                value["@"] = constructorName;
+            }
+        } else if (value instanceof Map) {
             return {
                 "@": "Map",
                 v: Array.from(value.entries())

@@ -31,10 +31,20 @@ it('json', function () {
 
     let s = JSONEx.stringify(a);
     console.log(s);
+    // {"num":10,"boolArr":[true,false],"b":{"n":2},
+    // "obj":{"t":1,"t2":""},"bObj":{"n":3},"bObj2":{"n":4},
+    // "bArr":[{"n":1},{"n":3}],
+    // "set":{"@":"Set","v":[{"n":11},{"n":11},{"n":12}]},
+    // "map":{"@":"Map","v":[["21",{"n":21}],["22",{"n":22}]]},
+    // "map2":{"@":"Map","v":[[{"n":23},23],[{"n":23},24]]},
+    // "map3":{"@":"Map","v":[[{"n":25},{"n":25}],[{"n":26},{"n":27}]]},
+    // "map4":{"@":"Map","v":[["1",1],["2",3]]}}
     let a1 = JSONEx.parse(s, A);
-    expect(a1 instanceof A).toBe(true);
-    expect(a1.b instanceof B).toBe(true);
-    expect(a1.bArr[0] instanceof B).toBe(true);
-    expect(a1.bArr[1] instanceof B).toBe(true);
+    expect(a1 instanceof A).toBeTruthy();
+    expect(a1.b instanceof B).toBeTruthy();
+    expect(a1.bArr[0] instanceof B).toBeTruthy();
+    expect(a1.bArr[1] instanceof B).toBeTruthy();
+    expect(a1.map.get("21") instanceof B).toBeTruthy();
+    expect(a1.map.get("22") instanceof B).toBeTruthy();
     debugger;
 });

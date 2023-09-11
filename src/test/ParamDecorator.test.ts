@@ -1,9 +1,12 @@
 export {}
 
-const ParamDecorator: ParameterDecorator = (target: Object, propertyKey: string | symbol, parameterIndex: number) => {
+const ParamDecorator = (target: {
+    [x: typeof propertyKey]: any
+}, propertyKey: string | symbol, parameterIndex: number) => {
     console.log(`target`, target);
     console.log(`propertyKey`, propertyKey);
     console.log(`parameterIndex`, parameterIndex);
+    return target[propertyKey];
 }
 
 class Human {

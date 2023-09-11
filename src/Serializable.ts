@@ -1,6 +1,6 @@
 import {Constructor} from "./UtilType";
 import SerializableNotSupportError from "./SerializableNotSupportError";
-import {getImplements} from "./decorator/Implements";
+import {getImplements} from "./interface/Implements";
 
 /**
  * 可序列化

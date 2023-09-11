@@ -2,7 +2,7 @@ export {}
 
 const SpeciesDecorator: PropertyDecorator = (target, name) => {
     console.log({target, name});
-    target["123"] = "abc";
+    // target["123"] = "abc";
     debugger;
 }
 

@@ -7,7 +7,7 @@ import ConstructStaticClassError from "../ConstructStaticClassError";
  * @param constructor
  * @constructor
  */
-function StaticClass<T extends { new (...args: any[]): {} }>(constructor: T) {
+function StaticClass<T extends { new(...args: any[]): {} }>(constructor: T) {
     return class extends constructor {
         constructor(...args: any[]) {
             super();
@@ -16,4 +16,4 @@ function StaticClass<T extends { new (...args: any[]): {} }>(constructor: T) {
     };
 }
 
-export default StaticClass;
+export default <ClassDecorator>StaticClass;
