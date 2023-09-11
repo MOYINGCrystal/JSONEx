@@ -1,6 +1,7 @@
 import {Constructor} from "./Type";
 import SerializableNotSupportError from "./error/SerializableNotSupportError";
-import {getImplements} from "./interface/Implements";
+
+let serializableSymbol = Symbol("Serializable");
 
 /**
  * 可序列化
@@ -13,7 +14,9 @@ import {getImplements} from "./interface/Implements";
  * 对于数组对象：
  * 数组元素类型无法为联合类型。
  */
-const Serializable = Symbol("Serializable");
+function Serializable(): ClassDecorator {
+    return Reflect.metadata(serializableSymbol, true);
+}
 
 export default Serializable;
 
@@ -34,7 +37,7 @@ export interface SerializableObject {
  * @param obj 对象
  */
 export function isSerializable(obj: Constructor<any>) {
-    return getImplements(obj).includes(Serializable);
+    return <boolean>Reflect.getMetadata(serializableSymbol, obj);
 }
 
 /**
@@ -45,6 +48,6 @@ export function isSerializable(obj: Constructor<any>) {
  * @throws SerializableNotSupportError
  */
 export function assertSerializable(obj: Constructor<any>) {
-    if (getImplements(obj).includes(Serializable)) return;
+    if (isSerializable(obj)) return;
     throw new SerializableNotSupportError(obj);
 }

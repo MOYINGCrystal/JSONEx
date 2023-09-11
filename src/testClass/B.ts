@@ -1,9 +1,8 @@
 import Transient from "../decorator/Transient";
-import Implements from "../interface/Implements";
 import "reflect-metadata";
 import Serializable from "../Serializable";
 
-@Implements(Serializable)
+@Serializable()
 export default class B {
     @Transient
     bool = true;
