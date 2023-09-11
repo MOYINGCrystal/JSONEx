@@ -7,7 +7,6 @@ import MapType from "./decorator/MapType";
 import Implements from "./interface/Implements";
 import Serializable from "./Serializable";
 import StaticClass from "./decorator/StaticClass";
-import {ReturnCache, ReturnCacheStatic} from "./decorator/ReturnCache";
 
 export {
     JSONEx,
@@ -19,6 +18,4 @@ export {
     Serializable,
     Transient,
     StaticClass,
-    ReturnCache,
-    ReturnCacheStatic,
 }

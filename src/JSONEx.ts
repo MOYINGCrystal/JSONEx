@@ -1,6 +1,6 @@
 import type {SerializableObject} from "./Serializable";
 import "reflect-metadata";
-import {Constructor} from "./UtilType";
+import {Constructor} from "./Type";
 import {arrayTypeSymbol} from "./decorator/ArrayType";
 import {assertSerializable} from "./Serializable";
 import {transientSymbol} from "./decorator/Transient";

@@ -1,4 +1,4 @@
-import {Constructor} from "./UtilType";
+import {Constructor} from "../Type";
 
 export default class SerializableNotSupportError extends Error {
     constructor(obj: Constructor<any>) {

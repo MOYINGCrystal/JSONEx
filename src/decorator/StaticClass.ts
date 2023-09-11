@@ -1,4 +1,4 @@
-import ConstructStaticClassError from "../ConstructStaticClassError";
+import ConstructStaticClassError from "../error/ConstructStaticClassError";
 
 /**
  * 静态类

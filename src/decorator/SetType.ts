@@ -1,6 +1,6 @@
 import {assertSerializable, SerializableObject} from "../Serializable";
 import "reflect-metadata"
-import {Constructor} from "../UtilType";
+import {Constructor} from "../Type";
 
 export const setTypeSymbol = Symbol("SetType");
 

@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import {Constructor} from "../UtilType";
+import {Constructor} from "../Type";
 
 const ImplSymbol = Symbol("Implements");
 
