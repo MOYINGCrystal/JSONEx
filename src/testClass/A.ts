@@ -6,7 +6,8 @@ import SetType from "../decorator/SetType";
 import Serializable from "../Serializable";
 import MapType from "../decorator/MapType";
 
-// 必须使用装饰器实现(Implements)序列化(Serializable)：
+// 必须使用序列化装饰器标记类，来表明类已实现可序列化：
+// 可序列化的所有非临时属性类型必须也为可序列化类：
 // 而SerializableObject接口实现与否都无所谓，毕竟在typescript中接口都是虚拟的，只有元数据才是真实的
 @Serializable()
 export default class A {
