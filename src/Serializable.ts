@@ -1,21 +1,31 @@
 import {Constructor} from "./Type";
 import SerializableNotSupportError from "./error/SerializableNotSupportError";
 
-let serializableSymbol = Symbol("Serializable");
+const serializableSymbol = Symbol("Serializable");
+export const serializableSubClassSymbol = Symbol("SerializableSubClass");
 
 /**
  * 可序列化
  *
  * @desc
- * 实现该接口即可使用本包中的JSONEx类来进行序列化和反序列化。
+ * 用该装饰器修饰类即可使用本包中的JSONEx类来进行序列化和反序列化。
  * <hr/>
  * 属性类型必须都为基本类型或可序列化的引用类型。
  * <hr/>
  * 对于数组对象：
  * 数组元素类型无法为联合类型。
+ * <hr/>
+ * 修饰器只对类自身有效，有子类需要序列化的话也需要子类被装饰器装饰。
  */
-function Serializable(): ClassDecorator {
-    return Reflect.metadata(serializableSymbol, true);
+const Serializable: ClassDecorator = (target) => {
+    let superClass = Object.getPrototypeOf(target);
+    while (Reflect.getMetadata(serializableSymbol, superClass) == superClass) {
+        const subClassData: (typeof target)[] = Reflect.getMetadata(serializableSubClassSymbol, superClass) ?? [];
+        subClassData.push(target);
+        Reflect.metadata(serializableSubClassSymbol, subClassData)(superClass);
+        superClass = Object.getPrototypeOf(superClass);
+    }
+    Reflect.metadata(serializableSymbol, target)(target);
 }
 
 export default Serializable;
@@ -25,7 +35,7 @@ export default Serializable;
  *
  * @desc 标记接口
  *       要想真正实现可序列化
- *       需要对类添加修饰器：<code>@Implements(serializable)</code>
+ *       需要对类添加修饰器：<code>@Serializable()</code>
  * @see Serializable
  * @see Implements
  */
@@ -37,7 +47,7 @@ export interface SerializableObject {
  * @param obj 对象
  */
 export function isSerializable(obj: Constructor<any>) {
-    return <boolean>Reflect.getMetadata(serializableSymbol, obj);
+    return Reflect.getMetadata(serializableSymbol, obj) == obj;
 }
 
 /**
