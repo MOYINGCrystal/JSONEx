@@ -20,7 +20,7 @@
     "build:test": "jest"
   },
   "keywords": [
-    "json"
+    "json", "ES6", "CommonJS"
   ],
   "author": "END_Crystal",
   "license": "ISC",

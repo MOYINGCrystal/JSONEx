@@ -57,7 +57,6 @@ export class JSONEx {
                 continue;
             }
             if (subObj instanceof Map) {
-                // UPDATE 优化结构
                 let constructor = <{
                     keyType: Constructor<SerializableObject>,
                     valueType: Constructor<SerializableObject>
