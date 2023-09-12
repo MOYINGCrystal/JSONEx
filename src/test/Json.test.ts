@@ -35,14 +35,17 @@ it('json', function () {
 
     let s = JSONEx.stringify(a);
     console.log(s);
-    // {"num":10,"boolArr":[true,false],"b":{"n":2},
-    // "obj":{"t":1,"t2":""},"bObj":{"n":3},"bObj2":{"n":4},
-    // "bArr":[{"n":1},{"n":3}],
-    // "set":{"@":"Set","v":[{"n":11},{"n":11},{"n":12}]},
-    // "map":{"@":"Map","v":[["21",{"n":21}],["22",{"n":22}]]},
-    // "map2":{"@":"Map","v":[[{"n":23},23],[{"n":23},24]]},
-    // "map3":{"@":"Map","v":[[{"n":25},{"n":25}],[{"n":26},{"n":27}]]},
-    // "map4":{"@":"Map","v":[["1",1],["2",3]]}}
+    // {"num":10,"boolArr":[true,false],"b":{"n":2,"@":"SuperClass"},
+    // "obj":{"t":1,"t2":""},"bObj":{"n":3,"@":"SuperClass"},
+    // "bObj2":{"n":4,"@":"SuperClass"},
+    // "c":{"n":3,"message":"SubClass1","@":"SubClass1"},
+    // "d":{"n":4,"message":"SubClass2","@":"SubClass2"},
+    // "bArr":[{"n":1,"@":"SuperClass"},{"n":3,"@":"SuperClass"},{"n":3,"message":"SubClass1","@":"SubClass1"},{"n":4,"message":"SubClass2","@":"SubClass2"}],
+    // "set":{"@":"Set","v":[{"n":11,"@":"SuperClass"},{"n":11,"@":"SuperClass"},{"n":12,"@":"SuperClass"},{"n":13,"message":"SubClass1","@":"SubClass1"}]},
+    // "map":{"@":"Map","v":[["21",{"n":21,"@":"SuperClass"}],["22",{"n":22,"@":"SuperClass"}],["sub1",{"n":23,"message":"SubClass1","@":"SubClass1"}],["sub2",{"n":24,"message":"SubClass2","@":"SubClass2"}]]},
+    // "map2":{"@":"Map","v":[[{"n":23,"@":"SuperClass"},23],[{"n":23,"@":"SuperClass"},24]]},
+    // "map3":{"@":"Map","v":[[{"n":25,"@":"SuperClass"},{"n":25,"@":"SuperClass"}],[{"n":26,"@":"SuperClass"},{"n":27,"@":"SuperClass"}]]},
+    // "map4":{"@":"Map","v":[["1",1],["2",3]]},"@":"RootClass"}
     let a1 = JSONEx.parse(s, RootClass);
     expect(a1 instanceof RootClass).toBeTruthy();
     expect(a1.b instanceof SuperClass).toBeTruthy();
@@ -56,18 +59,5 @@ it('json', function () {
     expect(a1.map.get("22") instanceof SuperClass).toBeTruthy();
     expect(a1.map.get("sub1") instanceof SubClass1).toBeTruthy();
     expect(a1.map.get("sub2") instanceof SubClass2).toBeTruthy();
-    debugger;
-});
-
-it('SubClass Test', function () {
-    let cO = new SubClass1(1);
-    let dO = new SubClass2(2);
-    let metadataKeys = Reflect.getMetadataKeys(SubClass1);
-    let metadataKeys1 = Reflect.getMetadataKeys(SubClass2);
-    let c = SubClass1;
-    let d = SubClass2;
-    let keys = Reflect.getMetadataKeys(SubClass1.prototype, "n");
-    let keys1 = Reflect.getMetadataKeys(SubClass2.prototype, "n");
-    let keys2 = Reflect.getMetadataKeys(SubClass1.prototype, "message");
     debugger;
 });
