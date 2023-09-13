@@ -1,6 +1,6 @@
 {
   "name": "jsonexend",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "main": "./dist/cjs/index.cjs",
   "types": "./dist/cjs/index.d.ts",
   "module": "./dist/esm/index.js",
@@ -27,7 +27,7 @@
   "author": "END_Crystal",
   "license": "ISC",
   "description": "JSON扩展",
-  "umdModuleName": "JSONEx",
+  "moduleName": "JSONEx",
   "devDependencies": {
     "@rollup/plugin-alias": "^5.0.0",
     "@rollup/plugin-json": "^6.0.0",
