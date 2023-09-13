@@ -3,3 +3,9 @@ node_modules
 example
 .idea
 .vscode
+
+tsconfig.json
+rollup.config.js
+commonjs.json
+example.js
+jest.config.cjs
