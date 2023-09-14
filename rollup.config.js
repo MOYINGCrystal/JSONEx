@@ -1,5 +1,4 @@
 import typescript from "@rollup/plugin-typescript";
-// import typescript from 'rollup-plugin-typescript2';
 import resolve from "@rollup/plugin-node-resolve";
 import {readFileSync} from "fs";
 import terser from "@rollup/plugin-terser";
@@ -34,4 +33,5 @@ export default {
         }),
         resolve(),
     ],
+    external : ["reflect-metadata"],
 };
