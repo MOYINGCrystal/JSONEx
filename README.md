@@ -15,6 +15,8 @@
 
 ### 使用用例：
 
+（也可查看dist/esm/test/Json.test.ts）
+
 测试类定义：
 ```ts
 import Transient from "../decorator/Transient";
@@ -88,7 +90,7 @@ export class RootClass {
     @SetType(SuperClass)
     set: Set<SuperClass> = new Set<SuperClass>();
 
-    // 使用@MapType([键类型],[值类型])来设置引用变量Map的类型，不修饰的引用变量Map会被反序列化为Map<Object, Object>
+    // 使用@MapType([值类型], ?[键类型])来设置引用变量Map的类型，不修饰的引用变量Map会被反序列化为Map<Object, Object>
     // 键类型为基本数据类型时可用：
     @MapType(SuperClass)
     map: Map<string, SuperClass> = new Map<string, SuperClass>();

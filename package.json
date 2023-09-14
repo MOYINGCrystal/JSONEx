@@ -1,6 +1,6 @@
 {
   "name": "jsonexend",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "main": "./dist/cjs/index.cjs",
   "types": "./dist/cjs/index.d.ts",
   "module": "./dist/esm/index.js",
@@ -13,10 +13,11 @@
     "debug": "start cmd /k pnpm run build:hot & pnpm run node:hot",
     "node:hot": "nodemon example.js --watch example.js",
     "build:hot": "pnpm rollup -c --watch",
-    "build": "rmdir /s/q .\\dist && pnpm run rollup:build && pnpm run commonjs",
+    "build": "rmdir /s/q .\\dist && pnpm run rollup:build && pnpm run commonjs && pnpm run copy:test",
     "rollup:build": "pnpm rollup -c",
     "build:publish": "pnpm run build && pnpm run publish",
     "commonjs": "copy .\\commonjs.json .\\dist\\cjs\\commmonjs.json",
+    "copy:test": "copy .\\src\\test .\\dist\\esm\\test",
     "build:test": "jest"
   },
   "keywords": [
