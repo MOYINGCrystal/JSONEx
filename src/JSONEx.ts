@@ -40,6 +40,9 @@ export class JSONEx {
                 let constructor = Reflect.getMetadata(arrayTypeSymbol, type, key);
                 if (!constructor) continue;
                 subObj.forEach(value => {
+                    if (!value) {
+                        return;
+                    }
                     let realConstructor = (<Constructor<any>[]>Reflect.getMetadata(serializableSubClassSymbol, constructor))?.find(v => v.name == value["@"]) ?? constructor;
                     Object.setPrototypeOf(value, realConstructor.prototype);
                     this.setPrototype(value, realConstructor.prototype);
@@ -50,6 +53,9 @@ export class JSONEx {
                 let constructor = Reflect.getMetadata(setTypeSymbol, type, key);
                 if (!constructor) continue;
                 subObj.forEach(value => {
+                    if (!value) {
+                        return;
+                    }
                     let realConstructor = (<Constructor<any>[]>Reflect.getMetadata(serializableSubClassSymbol, constructor))?.find(v => v.name == value["@"]) ?? constructor;
                     Object.setPrototypeOf(value, realConstructor.prototype);
                     this.setPrototype(value, realConstructor.prototype);
@@ -64,11 +70,17 @@ export class JSONEx {
                 if (!constructor) continue;
                 subObj.forEach((value, key) => {
                     if (constructor.valueType) {
+                        if (!value) {
+                            return;
+                        }
                         let realConstructor = (<Constructor<any>[]>Reflect.getMetadata(serializableSubClassSymbol, constructor.valueType))?.find(v => v.name == value["@"]) ?? constructor.valueType;
                         Object.setPrototypeOf(value, realConstructor.prototype);
                         this.setPrototype(value, realConstructor.prototype);
                     }
                     if (constructor.keyType) {
+                        if (!key) {
+                            return;
+                        }
                         let realConstructor = (<Constructor<any>[]>Reflect.getMetadata(serializableSubClassSymbol, constructor.keyType))?.find(v => v.name == value["@"]) ?? constructor.keyType;
                         Object.setPrototypeOf(key, realConstructor.prototype);
                         this.setPrototype(key, realConstructor.prototype);
