@@ -45,6 +45,7 @@ export class RootClass {
     boolArr: boolean[] = [];
 
     // 引用类型需要使用@AutoType修饰来让JSONEx自动获取类型，此功能是ts提供的，所以使用时必须保证显式声明了变量类型
+    // 当自动推断有问题时，可以使用@Type来手动指定类型, (如类型是: SuperClass | null 时，@AutoType不能正常工作)
     @AutoType
     b: SuperClass = new SuperClass(2);
 

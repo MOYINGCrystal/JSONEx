@@ -6,6 +6,7 @@ import SetType from "./decorator/SetType";
 import MapType from "./decorator/MapType";
 import Serializable from "./Serializable";
 import StaticClass from "./decorator/StaticClass";
+import Type from "./decorator/Type";
 
 export {
     JSONEx,
@@ -16,4 +17,5 @@ export {
     Serializable,
     Transient,
     StaticClass,
+    Type
 }
