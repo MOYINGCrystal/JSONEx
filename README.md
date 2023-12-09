@@ -19,34 +19,16 @@
 
 测试类定义：
 ```ts
-import Transient from "../decorator/Transient";
-import Serializable from "../Serializable";
-
-@Serializable
-export class SuperClass {
-    @Transient
-    bool = true;
-
-    constructor(public n: number) {
-    }
-
-    getN() {
-        return this.n;
-    }
-}
-
-@Serializable
-export class SubClass1 extends SuperClass {
-    message: string = "SubClass1";
-}
-
-@Serializable
-export class SubClass2 extends SuperClass {
-    message: string = "SubClass2";
-}
+import {SuperClass} from "./SuperClass";
+import {Serializable, Transient} from "../index";
+import {SubClass1} from "./SubClass1";
+import {SubClass2} from "./SubClass2";
+import {TypeClass} from "./TypeClass";
 
 // 必须使用序列化装饰器标记类，否则类将被反序列化为Object：
-@Serializable
+// 修饰器的参数没有任何作用，也可以不提供，参数只是为了提醒不要使用类型导入子类型
+// 例如没有提供SubClass2
+@Serializable(() => SuperClass, () => SubClass1, () => TypeClass)
 export class RootClass {
     num: number = 2;
 
@@ -62,7 +44,8 @@ export class RootClass {
 
     bObj: SuperClass = new SuperClass(3);
 
-    bObj2 = new SuperClass(4);
+    // 此时可能会使用类型导入导入TypeClass，这样的话会导致反序列化失败，可以使用@Serializable可选的参数提醒
+    typeClass: TypeClass | null = null;
 
     // 即使是子类也可以被正常反序列化，请确保子类也被@Serializable修饰
     c: SuperClass = new SubClass1(3);
@@ -86,10 +69,64 @@ export class RootClass {
     }
 }
 ```
+```ts
+import Serializable from "../Serializable";
+import Transient from "../decorator/Transient";
+
+@Serializable()
+export class SuperClass {
+    @Transient
+    bool = true;
+
+    constructor(public n: number) {
+    }
+
+    getN() {
+        return this.n;
+    }
+}
+```
+```ts
+import Serializable from "../Serializable";
+import {SuperClass} from "./SuperClass";
+
+@Serializable()
+export class SubClass1 extends SuperClass {
+    message: string = "SubClass1";
+}
+```
+```ts
+import Serializable from "../Serializable";
+import {SuperClass} from "./SuperClass";
+
+@Serializable()
+export class SubClass2 extends SuperClass {
+    message: string = "SubClass2";
+}
+```
+```ts
+import Serializable from "../Serializable";
+
+@Serializable()
+export class TypeClass {
+    str = "TypeClass";
+
+    constructor(public n: number) {
+    }
+
+    getN() {
+        return this.n;
+    }
+}
+```
 序列化与反序列化：
 ```ts
-import {RootClass, SuperClass, SubClass1, SubClass2} from "./TestClass";
 import {JSONEx} from "../JSONEx";
+import {RootClass} from "./RootClass";
+import {SuperClass} from "./SuperClass";
+import {SubClass1} from "./SubClass1";
+import {SubClass2} from "./SubClass2";
+import {TypeClass} from "./TypeClass";
 
 it('json', function () {
     let a = new RootClass();
@@ -122,10 +159,12 @@ it('json', function () {
     a.map4.set("1", 1);
     a.map4.set("2", 3);
 
+    a.typeClass = new TypeClass(6)
+
     let s = JSONEx.stringify(a);
     console.log(s);
 
-    let a1 = <RootClass>JSONEx.parse(s);
+    let a1 = JSONEx.parse(s, RootClass);
     expect(a1 instanceof RootClass).toBeTruthy();
     expect(a1.b instanceof SuperClass).toBeTruthy();
     expect(a1.c instanceof SubClass1).toBeTruthy();
@@ -138,6 +177,7 @@ it('json', function () {
     expect(a1.map.get("22") instanceof SuperClass).toBeTruthy();
     expect(a1.map.get("sub1") instanceof SubClass1).toBeTruthy();
     expect(a1.map.get("sub2") instanceof SubClass2).toBeTruthy();
+    expect(a1.typeClass instanceof TypeClass).toBeTruthy();
     debugger;
 });
 ```

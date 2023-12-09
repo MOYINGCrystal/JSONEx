@@ -1,4 +1,4 @@
-import {Constructor} from "./Type";
+import {Constructor, Supplier} from "./Type";
 
 const constructorMap = new Map<string, Constructor<SerializableObject>>();
 const keyMap = new Map<Constructor<SerializableObject>, string>();
@@ -12,9 +12,11 @@ const keyMap = new Map<Constructor<SerializableObject>, string>();
  * 属性类型必须都为基本类型或可序列化的引用类型。
  * <hr/>
  * 修饰器只对类自身有效，有子类需要序列化的话也需要子类被装饰器装饰。
+ *
+ * @param subTypes 没有任何作用，只是为了提醒不要使用类型导入
  */
-const Serializable: ClassDecorator = (target) => {
-    const key = target.name + "@" + constructorMap.size;
+const Serializable: (...subTypes: Supplier<Constructor<SerializableObject>>[]) => ClassDecorator = (...subTypes) => (target) => {
+    const key = target.name/* + "@" + constructorMap.size*/;
     constructorMap.set(key, <Constructor<SerializableObject>><any>target);
     keyMap.set(<Constructor<SerializableObject>><any>target, key);
 }

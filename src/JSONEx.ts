@@ -3,10 +3,11 @@ import {getClassKey, getConstructor} from "./Serializable";
 import "reflect-metadata";
 import {transientSymbol} from "./decorator/Transient";
 import StaticClass from "./decorator/StaticClass";
+import {Constructor} from "./Type";
 
 @StaticClass
 export class JSONEx {
-    public static parse<T extends SerializableObject>(text: string): T {
+    public static parse<T extends SerializableObject>(text: string, type: Constructor<T>): T {
         return JSON.parse(text, this.reviver);
     }
 

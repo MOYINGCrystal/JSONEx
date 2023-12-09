@@ -1,71 +1,9 @@
 import {JSONEx} from "../JSONEx";
-import "reflect-metadata";
-import Serializable from "../Serializable";
-import Transient from "../decorator/Transient";
-
-@Serializable
-export class SuperClass {
-    @Transient
-    bool = true;
-
-    constructor(public n: number) {
-    }
-
-    getN() {
-        return this.n;
-    }
-}
-
-@Serializable
-export class SubClass1 extends SuperClass {
-    message: string = "SubClass1";
-}
-
-@Serializable
-export class SubClass2 extends SuperClass {
-    message: string = "SubClass2";
-}
-
-// 必须使用序列化装饰器标记类，否则类将被反序列化为Object：
-@Serializable
-export class RootClass {
-    num: number = 2;
-
-    // 被@Transient修饰的属性，不会被序列化
-    @Transient
-    str: string = "临时变量";
-
-    boolArr: boolean[] = [];
-
-    b: SuperClass = new SuperClass(2);
-
-    obj = {t: 1, t2: ""};
-
-    bObj: SuperClass = new SuperClass(3);
-
-    bObj2 = new SuperClass(4);
-
-    // 即使是子类也可以被正常反序列化，请确保子类也被@Serializable修饰
-    c: SuperClass = new SubClass1(3);
-
-    d: SuperClass = new SubClass2(4);
-
-    bArr: SuperClass[] = [];
-
-    set: Set<SuperClass> = new Set<SuperClass>();
-
-    map: Map<string, SuperClass> = new Map<string, SuperClass>();
-
-    map2: Map<SuperClass, number> = new Map();
-
-    map3: Map<SuperClass, SuperClass> = new Map();
-
-    map4: Map<string, number> = new Map();
-
-    getNum(): number {
-        return this.num;
-    }
-}
+import {RootClass} from "./RootClass";
+import {SuperClass} from "./SuperClass";
+import {SubClass1} from "./SubClass1";
+import {SubClass2} from "./SubClass2";
+import {TypeClass} from "./TypeClass";
 
 it('json', function () {
     let a = new RootClass();
@@ -98,10 +36,12 @@ it('json', function () {
     a.map4.set("1", 1);
     a.map4.set("2", 3);
 
+    a.typeClass = new TypeClass(6)
+
     let s = JSONEx.stringify(a);
     console.log(s);
 
-    let a1 = <RootClass>JSONEx.parse(s);
+    let a1 = JSONEx.parse(s, RootClass);
     expect(a1 instanceof RootClass).toBeTruthy();
     expect(a1.b instanceof SuperClass).toBeTruthy();
     expect(a1.c instanceof SubClass1).toBeTruthy();
@@ -114,5 +54,6 @@ it('json', function () {
     expect(a1.map.get("22") instanceof SuperClass).toBeTruthy();
     expect(a1.map.get("sub1") instanceof SubClass1).toBeTruthy();
     expect(a1.map.get("sub2") instanceof SubClass2).toBeTruthy();
+    expect(a1.typeClass instanceof TypeClass).toBeTruthy();
     debugger;
 });
