@@ -16,7 +16,7 @@ const keyMap = new Map<Constructor<SerializableObject>, string>();
  * @param subTypes 没有任何作用，只是为了提醒不要使用类型导入
  */
 const Serializable: (...subTypes: Supplier<Constructor<SerializableObject>>[]) => ClassDecorator = (...subTypes) => (target) => {
-    const key = target.name/* + "@" + constructorMap.size*/;
+    const key = target.name;// TODO 解决不同类同名问题
     constructorMap.set(key, <Constructor<SerializableObject>><any>target);
     keyMap.set(<Constructor<SerializableObject>><any>target, key);
 }

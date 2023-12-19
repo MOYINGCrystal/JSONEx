@@ -28,6 +28,8 @@ export class JSONEx {
                 const constructor = getConstructor(value["@"]);
                 if (constructor) {
                     Object.setPrototypeOf(value, constructor.prototype);
+                    if(value.parseAfter)
+                        value.parseAfter();
                 }
             }
         }
@@ -41,6 +43,8 @@ export class JSONEx {
         const type = Object.prototype.toString.call(value);
         if (type === "[object Object]") {
             if (value.constructor.name !== "Object") {
+                if(value.stringifyBefore)
+                    value.stringifyBefore();
                 value["@"] = getClassKey(value.constructor);
             }
         } else if (value instanceof Map) {
