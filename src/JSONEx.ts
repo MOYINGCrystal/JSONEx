@@ -4,6 +4,8 @@ import "reflect-metadata";
 import {transientSymbol} from "./decorator/Transient";
 import StaticClass from "./decorator/StaticClass";
 import {Constructor} from "./Type";
+import {stringifyBeforeSymbol} from "./decorator/StringifyBefore";
+import {parseAfterSymbol} from "./decorator/ParseAfter";
 
 @StaticClass
 export class JSONEx {
@@ -28,8 +30,10 @@ export class JSONEx {
                 const constructor = getConstructor(value["@"]);
                 if (constructor) {
                     Object.setPrototypeOf(value, constructor.prototype);
-                    if(value.parseAfter)
-                        value.parseAfter();
+                    const parseAfter: string | null = Reflect.getMetadata(parseAfterSymbol, value.constructor);
+                    if (parseAfter) {
+                        value[parseAfter]();
+                    }
                 }
             }
         }
@@ -43,8 +47,10 @@ export class JSONEx {
         const type = Object.prototype.toString.call(value);
         if (type === "[object Object]") {
             if (value.constructor.name !== "Object") {
-                if(value.stringifyBefore)
-                    value.stringifyBefore();
+                const stringifyBefore: string | null = Reflect.getMetadata(stringifyBeforeSymbol, value.constructor);
+                if (stringifyBefore) {
+                    value[stringifyBefore]();
+                }
                 value["@"] = getClassKey(value.constructor);
             }
         } else if (value instanceof Map) {
