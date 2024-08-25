@@ -1,4 +1,4 @@
-export const parseAfterSymbol = Symbol("StringifyBefore");
+export const parseAfterSymbol = Symbol("ParseAfter");
 
 const ParseAfter: MethodDecorator = (target, propertyKey, descriptor) => {
     Reflect.metadata(parseAfterSymbol, propertyKey)(target.constructor);
