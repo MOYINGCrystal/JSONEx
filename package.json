@@ -1,5 +1,5 @@
 {
-  "name": "jsonexend",
+  "name": "@endcrystal/jsonex",
   "version": "0.4.4",
   "main": "./dist/cjs/index.cjs",
   "types": "./dist/cjs/index.d.ts",
