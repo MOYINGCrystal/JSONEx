@@ -29,22 +29,22 @@
   "license": "ISC",
   "description": "JSON扩展",
   "moduleName": "JSONEx",
+  "dependencies": {
+    "reflect-metadata": "0.2.2"
+  },
   "devDependencies": {
+    "rollup": "^2.79.1",
     "@rollup/plugin-alias": "^5.0.0",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.2.1",
     "@rollup/plugin-typescript": "^11.1.3",
-    "@types/jest": "^29.5.4",
-    "jest": "^29.6.4",
-    "rollup": "^2.79.1",
     "rollup-plugin-terser": "^7.0.2",
-    "ts-jest": "^29.1.1",
-    "tslib": "^2.6.2",
     "@rollup/plugin-terser": "^0.4.3",
     "rollup-plugin-typescript2": "^0.35.0",
+    "@types/jest": "^29.5.4",
+    "jest": "^29.6.4",
+    "ts-jest": "^29.1.1",
+    "tslib": "^2.6.2",
     "typescript": "^5.2.2"
-  },
-  "dependencies": {
-    "reflect-metadata": "0.2.2"
   }
 }
