@@ -1,4 +1,4 @@
-import {JSONEx} from "../../lib";
+import {JSONEx} from "../index";
 import "reflect-metadata";
 import {RootClass} from "./RootClass";
 import { it } from 'vitest';

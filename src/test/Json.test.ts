@@ -1,4 +1,4 @@
-import {JSONEx} from "../../lib";
+import {JSONEx} from "@/index";
 import {RootClass} from "./RootClass";
 import {SuperClass} from "./SuperClass";
 import {SubClass1} from "./SubClass1";

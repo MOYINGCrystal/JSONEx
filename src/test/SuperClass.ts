@@ -1,5 +1,5 @@
-import Serializable from "../../lib/Serializable";
-import Transient from "../../lib/decorator/Transient";
+import Serializable from "../Serializable";
+import Transient from "../decorator/Transient";
 
 @Serializable()
 export class SuperClass {

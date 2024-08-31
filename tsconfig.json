@@ -10,11 +10,10 @@
         "noEmitOnError": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitReturns": true,
-//        "removeComments": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "outDir": "dist",
-//        "rootDir": "src",
+        "baseUrl": ".",
         "strict": true,
         "skipLibCheck": true,
         "lib": [
@@ -24,7 +23,11 @@
             "ES2015.promise",
             "ES2018.promise",
             "ES2015.iterable"
-        ]
-    },
-//    "exclude": ["/dist","/node_modules"]
+        ],
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        }
+    }
 }

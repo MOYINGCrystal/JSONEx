@@ -8,7 +8,7 @@ export default defineConfig({
     build: {
         outDir: 'dist',
         lib: {
-            entry: path.resolve(__dirname, 'lib/index.ts'),
+            entry: path.resolve(__dirname, 'src/index.ts'),
             formats: ['es'],
         }
     }

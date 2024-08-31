@@ -15,7 +15,7 @@
 
 ### 使用用例：
 
-（也可查看dist/esm/test/Json.test.ts）
+（也可查看src/test/Json.test.ts）
 
 测试类定义：
 ```ts
