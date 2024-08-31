@@ -1,7 +1,7 @@
-import Serializable from "../Serializable";
+import Serializable from "../../lib/Serializable";
 import {SuperClass} from "./SuperClass";
-import StringifyBefore from "../decorator/StringifyBefore";
-import ParseAfter from "../decorator/ParseAfter";
+import StringifyBefore from "../../lib/decorator/StringifyBefore";
+import ParseAfter from "../../lib/decorator/ParseAfter";
 
 @Serializable()
 export class SubClass1 extends SuperClass {

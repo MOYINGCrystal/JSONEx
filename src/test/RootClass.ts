@@ -1,5 +1,5 @@
 import {SuperClass} from "./SuperClass";
-import {Serializable, Transient} from "../index";
+import {Serializable, Transient} from "../../lib";
 import {SubClass1} from "./SubClass1";
 import {SubClass2} from "./SubClass2";
 import {TypeClass} from "./TypeClass";

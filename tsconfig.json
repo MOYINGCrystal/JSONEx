@@ -14,7 +14,7 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "outDir": "dist",
-        "rootDir": "src",
+//        "rootDir": "src",
         "strict": true,
         "skipLibCheck": true,
         "lib": [

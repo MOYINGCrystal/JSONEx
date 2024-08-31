@@ -1,29 +1,20 @@
 {
   "name": "@endcrystal/jsonex",
   "version": "0.4.4",
-  "main": "./dist/cjs/index.cjs",
-  "types": "./dist/cjs/index.d.ts",
-  "module": "./dist/esm/index.js",
+  "main": "./dist/jsonex.js",
+  "types": "./dist/index.d.ts",
   "type": "module",
   "exports": {
-    "import": "./dist/esm/index.js",
-    "require": "./dist/cjs/index.cjs"
+    "import": "./dist/jsonex.js"
   },
   "scripts": {
-    "debug": "start cmd /k pnpm run build:hot & pnpm run node:hot",
-    "node:hot": "nodemon example.js --watch example.js",
-    "build:hot": "pnpm rollup -c --watch",
-    "build": "rmdir /s/q .\\dist && pnpm run rollup:build && pnpm run commonjs && pnpm run copy:test",
-    "rollup:build": "pnpm rollup -c",
-    "build:publish": "pnpm run build && pnpm run publish",
-    "commonjs": "copy .\\commonjs.json .\\dist\\cjs\\commmonjs.json",
-    "copy:test": "copy .\\src\\test .\\dist\\esm\\test",
-    "build:test": "jest"
+    "dev": "vite",
+    "build": "vite build && tsc lib/index.ts --declaration --emitDeclarationOnly --declarationDir dist -t ESNext --moduleResolution Bundler --module ESNext",
+    "serve": "vite preview",
+    "publish": "npm publish"
   },
   "keywords": [
-    "json",
-    "ES6",
-    "CommonJS"
+    "json"
   ],
   "author": "END_Crystal",
   "license": "ISC",
@@ -33,18 +24,9 @@
     "reflect-metadata": "0.2.2"
   },
   "devDependencies": {
-    "rollup": "^2.79.1",
-    "@rollup/plugin-alias": "^5.0.0",
-    "@rollup/plugin-json": "^6.0.0",
-    "@rollup/plugin-node-resolve": "^15.2.1",
-    "@rollup/plugin-typescript": "^11.1.3",
-    "rollup-plugin-terser": "^7.0.2",
-    "@rollup/plugin-terser": "^0.4.3",
-    "rollup-plugin-typescript2": "^0.35.0",
-    "@types/jest": "^29.5.4",
-    "jest": "^29.6.4",
-    "ts-jest": "^29.1.1",
     "tslib": "^2.6.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.4.4",
+    "vite": "^5.4.2",
+    "vitest": "^2.0.5"
   }
 }

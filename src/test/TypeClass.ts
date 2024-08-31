@@ -1,4 +1,4 @@
-import Serializable from "../Serializable";
+import Serializable from "../../lib/Serializable";
 
 @Serializable()
 export class TypeClass {
