@@ -1,4 +1,12 @@
-# @endcrystal/jsonex JSON-EX
+# @endcrystal/jsonex JSON扩展
+
+与原生JSON的区别就是  
+JSONEx将类型信息一并序列化  
+这在模块化之前较易实现，只需保存类名，并在反序列化时访问这些全局的类即可  
+而在模块化之后则不能这样实现，因为不存在全局的类  
+JSONEx的本质就是将被@Serializable()修饰的类放到一个结构中存储起来，并在反序列化时在这个结构中读取而已  
+除此之外JSONEx还包含Map Set类型变量的序列化  
+灵感来源来自RPG Maker MZ中实现的JSONEx，但是在模块化之后失效
 
 ### 用前须知
 
@@ -15,7 +23,7 @@
 
 ### 使用用例：
 
-（也可查看src/test/Json.test.ts）
+也可查看src/test/Json.test.ts
 
 测试类定义：
 ```ts
