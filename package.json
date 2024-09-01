@@ -17,7 +17,7 @@
     "json"
   ],
   "author": "END_Crystal",
-  "license": "ISC",
+  "license": "MIT",
   "description": "JSON扩展",
   "moduleName": "JSONEx",
   "dependencies": {
