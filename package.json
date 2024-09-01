@@ -1,6 +1,6 @@
 {
   "name": "@endcrystal/jsonex",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "main": "./dist/jsonex.js",
   "types": "./dist/index.d.ts",
   "type": "module",

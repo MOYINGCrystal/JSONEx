@@ -2,12 +2,10 @@ import type {SerializableObject} from "./Serializable";
 import {getClassKey, getConstructor} from "./Serializable";
 import "reflect-metadata";
 import {transientSymbol} from "./decorator/Transient";
-import StaticClass from "./decorator/StaticClass";
 import {Constructor} from "./Type";
 import {stringifyBeforeSymbol} from "./decorator/StringifyBefore";
 import {parseAfterSymbol} from "./decorator/ParseAfter";
 
-@StaticClass
 export default class JSONExImpl {
     public static parse<T extends SerializableObject>(text: string, type: Constructor<T>): T {
         return JSON.parse(text, this.reviver);
