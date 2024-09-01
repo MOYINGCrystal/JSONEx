@@ -1,6 +1,6 @@
 {
   "name": "@endcrystal/jsonex",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "main": "./dist/jsonex.js",
   "types": "./dist/index.d.ts",
   "type": "module",
@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build && tsc src/index.ts --declaration --emitDeclarationOnly --declarationDir dist -t ESNext --moduleResolution Bundler --module ESNext",
+    "build": "vite build && tsc src/JSONEx.ts --declaration --emitDeclarationOnly --declarationDir dist -t ESNext --moduleResolution Bundler --module ESNext",
     "serve": "vite preview",
     "publish": "npm publish"
   },
@@ -27,5 +27,8 @@
     "typescript": "^5.4.4",
     "vite": "^5.4.2",
     "vitest": "^2.0.5"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

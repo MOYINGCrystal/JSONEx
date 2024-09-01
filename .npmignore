@@ -5,7 +5,5 @@ example
 .vscode
 
 tsconfig.json
-rollup.config.js
-commonjs.json
-example.js
 jest.config.cjs
+vite.config.ts

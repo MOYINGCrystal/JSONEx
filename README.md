@@ -145,7 +145,7 @@ export class TypeClass {
 ```
 序列化与反序列化：
 ```ts
-import {JSONEx} from "../JSONEx";
+import {JSONExImpl} from "../JSONExImpl";
 import {RootClass} from "./RootClass";
 import {SuperClass} from "./SuperClass";
 import {SubClass1} from "./SubClass1";
@@ -185,10 +185,10 @@ it('json', function () {
 
     a.typeClass = new TypeClass(6)
 
-    let s = JSONEx.stringify(a);
+    let s = JSONExImpl.stringify(a);
     console.log(s);
 
-    let a1 = JSONEx.parse(s, RootClass);
+    let a1 = JSONExImpl.parse(s, RootClass);
     expect(a1 instanceof RootClass).toBeTruthy();
     expect(a1.b instanceof SuperClass).toBeTruthy();
     expect(a1.c instanceof SubClass1).toBeTruthy();
