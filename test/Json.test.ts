@@ -4,7 +4,7 @@ import {SuperClass} from "./SuperClass";
 import {SubClass1} from "./SubClass1";
 import {SubClass2} from "./SubClass2";
 import {TypeClass} from "./TypeClass";
-import { it, expect } from 'vitest';
+import {it, expect} from 'vitest';
 
 it('json', function () {
     let a = new RootClass();
@@ -37,7 +37,7 @@ it('json', function () {
     a.map4.set("1", 1);
     a.map4.set("2", 3);
 
-    a.typeClass = new TypeClass(6)
+    a.typeClass = new TypeClass(6);
 
     let s = JSONEx.stringify(a);
     console.log(s);

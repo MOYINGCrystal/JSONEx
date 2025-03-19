@@ -1,4 +1,4 @@
-import Serializable from "../Serializable";
+import Serializable from "@/Serializable";
 import {SuperClass} from "./SuperClass";
 
 @Serializable()

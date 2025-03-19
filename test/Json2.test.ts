@@ -1,4 +1,4 @@
-import {JSONEx, Serializable} from "../JSONEx";
+import {JSONEx, Serializable} from "@/JSONEx";
 import "reflect-metadata";
 import {RootClass} from "./RootClass";
 import {expect, it} from 'vitest';
