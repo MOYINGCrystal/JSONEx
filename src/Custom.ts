@@ -40,10 +40,16 @@ export interface CustomSerializer<B extends SerializableObject, L> {
     reviver(later: L): B;
 }
 
+/**
+ * @internal
+ */
 export function getCustomSerializerByKey(key: string) {
     return mapByKey.get(key);
 }
 
+/**
+ * @internal
+ */
 export function getCustomSerializerByConstructor(key: Constructor<SerializableObject>) {
     return mapByConstructor.get(key);
 }

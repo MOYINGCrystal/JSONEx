@@ -24,10 +24,16 @@ const Serializable: (...subTypes: Supplier<Constructor<SerializableObject>>[]) =
     antiMap.set(<Constructor<SerializableObject>><unknown>target, key);
 };
 
+/**
+ * @internal
+ */
 export function getClassKey(clazz: Constructor<SerializableObject>) {
     return antiMap.get(clazz);
 }
 
+/**
+ * @internal
+ */
 export function getConstructor(key: string) {
     return map.get(key);
 }
