@@ -37,8 +37,8 @@ class O {
 it('name', () => {
     const o = new O();
     const n = JSONEx.parse(JSONEx.stringify(o), O);
-    expect(n.a instanceof A.clazz).toBeTruthy();
-    expect(n.b instanceof B.clazz).toBeTruthy();
+    expect(<unknown>n.a instanceof A.clazz).toBeTruthy();
+    expect(<unknown>n.b instanceof B.clazz).toBeTruthy();
     expect(n.a.a()).toBe("A");
     expect(n.b.b()).toBe("B");
     debugger;

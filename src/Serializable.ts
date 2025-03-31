@@ -1,7 +1,7 @@
 import {Constructor, Supplier} from "./Type";
 
-const constructorMap = new Map<string, Constructor<SerializableObject>>();
-const keyMap = new Map<Constructor<SerializableObject>, string>();
+const map = new Map<string, Constructor<SerializableObject>>();
+const antiMap = new Map<Constructor<SerializableObject>, string>();
 
 /**
  * 可序列化
@@ -17,19 +17,19 @@ const keyMap = new Map<Constructor<SerializableObject>, string>();
  */
 const Serializable: (...subTypes: Supplier<Constructor<SerializableObject>>[]) => ClassDecorator = (...subTypes) => (target) => {
     let key = target.name;
-    while (constructorMap.has(key)) {
+    while (map.has(key)) {
         key += "a";
     }
-    constructorMap.set(key, <Constructor<SerializableObject>><any>target);
-    keyMap.set(<Constructor<SerializableObject>><any>target, key);
+    map.set(key, <Constructor<SerializableObject>><unknown>target);
+    antiMap.set(<Constructor<SerializableObject>><unknown>target, key);
 };
 
 export function getClassKey(clazz: Constructor<SerializableObject>) {
-    return keyMap.get(clazz);
+    return antiMap.get(clazz);
 }
 
 export function getConstructor(key: string) {
-    return constructorMap.get(key);
+    return map.get(key);
 }
 
 export default Serializable;

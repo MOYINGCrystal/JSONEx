@@ -4,7 +4,7 @@ import {SuperClass} from "./SuperClass";
 import {SubClass1} from "./SubClass1";
 import {SubClass2} from "./SubClass2";
 import {TypeClass} from "./TypeClass";
-import {it, expect} from 'vitest';
+import {it, expect, assert} from 'vitest';
 
 it('json', function () {
     let a = new RootClass();
@@ -43,8 +43,8 @@ it('json', function () {
     console.log(s);
 
     let a1 = JSONEx.parse(s, RootClass);
-    expect(a1 instanceof RootClass).toBeTruthy();
-    expect(a1.b instanceof SuperClass).toBeTruthy();
+    expect(<unknown>a1 instanceof RootClass).toBeTruthy();
+    expect(<unknown>a1.b instanceof SuperClass).toBeTruthy();
     expect(a1.c instanceof SubClass1).toBeTruthy();
     expect(a1.d instanceof SubClass2).toBeTruthy();
     expect(a1.bArr[0] instanceof SuperClass).toBeTruthy();
@@ -56,5 +56,7 @@ it('json', function () {
     expect(a1.map.get("sub1") instanceof SubClass1).toBeTruthy();
     expect(a1.map.get("sub2") instanceof SubClass2).toBeTruthy();
     expect(a1.typeClass instanceof TypeClass).toBeTruthy();
+    expect(a1.set instanceof Set).toBeTruthy();
+    expect(a1.set.size).eq(4);
     debugger;
 });

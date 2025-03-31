@@ -1,3 +1,4 @@
+import {getCustomSerializerByConstructor, getCustomSerializerByKey} from "@/Custom";
 import type {SerializableObject} from "./Serializable";
 import {getClassKey, getConstructor} from "./Serializable";
 import "reflect-metadata";
@@ -18,11 +19,9 @@ export default class JSONExImpl {
     private static reviver(key: string, value: any) {
         const type = Object.prototype.toString.call(value);
         if (type === "[object Object]" || type === "[object Array]") {
-            if (value["@"] === 'Map') {
-                return new Map(value.v);
-            }
-            if (value["@"] === 'Set') {
-                return new Set(value.v);
+            const customSerializer = getCustomSerializerByKey(value["@"]);
+            if (customSerializer) {
+                return customSerializer.reviver(value.value);
             }
             if (value["@"]) {
                 const constructor = getConstructor(value["@"]);
@@ -43,6 +42,13 @@ export default class JSONExImpl {
             return;
         }
         const type = Object.prototype.toString.call(value);
+        const customSerializer = getCustomSerializerByConstructor(value.constructor);
+        if (customSerializer) {
+            return {
+                "@": getClassKey(value.constructor),
+                value: customSerializer.replacer(value)
+            };
+        }
         if (type === "[object Object]") {
             if (value.constructor.name !== "Object") {
                 const stringifyBefore: string | null = Reflect.getMetadata(stringifyBeforeSymbol, value.constructor);
@@ -51,16 +57,7 @@ export default class JSONExImpl {
                 }
                 value["@"] = getClassKey(value.constructor);
             }
-        } else if (value instanceof Map) {
-            return {
-                "@": "Map",
-                v: Array.from(value.entries())
-            };
-        } else if (value instanceof Set) {
-            return {
-                "@": "Set",
-                v: Array.from(value.values())
-            }
+            return value;
         }
         return value;
     }

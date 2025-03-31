@@ -8,7 +8,7 @@ JSONEx的本质就是将被@Serializable()修饰的类放到一个结构中存�
 除此之外JSONEx还包含Map Set类型变量的序列化  
 灵感来源来自RPG Maker MZ中实现的JSONEx，但是在模块化之后失效
 
-### 用前须知
+## 用前须知
 
 请确保tsconfig.json中已开启以下项目：
 
@@ -21,9 +21,13 @@ JSONEx的本质就是将被@Serializable()修饰的类放到一个结构中存�
 }
 ```
 
-### 使用用例：
+## 使用用例：
 
 也可查看src/test/Json.test.ts
+
+### 使用装饰器
+可以使用装饰器使类可被类型序列化和反序列化  
+下面是一个使用用例：  
 
 测试类定义：
 ```ts
@@ -189,8 +193,8 @@ it('json', function () {
     console.log(s);
 
     let a1 = JSONExImpl.parse(s, RootClass);
-    expect(a1 instanceof RootClass).toBeTruthy();
-    expect(a1.b instanceof SuperClass).toBeTruthy();
+    expect(<unknown>a1 instanceof RootClass).toBeTruthy();
+    expect(<unknown>a1.b instanceof SuperClass).toBeTruthy();
     expect(a1.c instanceof SubClass1).toBeTruthy();
     expect(a1.d instanceof SubClass2).toBeTruthy();
     expect(a1.bArr[0] instanceof SuperClass).toBeTruthy();
@@ -202,6 +206,39 @@ it('json', function () {
     expect(a1.map.get("sub1") instanceof SubClass1).toBeTruthy();
     expect(a1.map.get("sub2") instanceof SubClass2).toBeTruthy();
     expect(a1.typeClass instanceof TypeClass).toBeTruthy();
+    expect(a1.set instanceof Set).toBeTruthy();
+    expect(a1.set.size).eq(4);
     debugger;
+});
+```
+
+### 直接注册
+如果希望一些库的类支持类型序列化，可以使用直接调用装饰器的方法：
+```ts
+import Serializable from "../Serializable";
+import LinkedList from "libName";
+
+Serializable()(LinkedList);
+```
+
+### 自定义序列化器
+一些类因为特殊的机制无法自动的被带类型序列化  
+需要对其进行一些转换之后再进入序列化过程  
+例如Map和Set  
+此时可以注册自定义序列化器  
+已自动注册Map和Set的自定义序列化器  
+可参考其注册方法：
+```ts
+registerCustomSerializer({
+        constructor: Map,
+        replacer: map => Array.from(map.entries()),
+        reviver: json => new Map(json)
+    }
+);
+
+registerCustomSerializer({
+    constructor: Set,
+    replacer: before => Array.from(before.values()),
+    reviver: later => new Set(later)
 });
 ```
