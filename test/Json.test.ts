@@ -4,7 +4,7 @@ import {SuperClass} from "./SuperClass";
 import {SubClass1} from "./SubClass1";
 import {SubClass2} from "./SubClass2";
 import {TypeClass} from "./TypeClass";
-import {it, expect, assert} from 'vitest';
+import {it, expect} from 'vitest';
 
 it('json', function () {
     let a = new RootClass();

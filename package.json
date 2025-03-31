@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build && tsc src/JSONEx.ts --declaration --emitDeclarationOnly --declarationDir dist -t ESNext --moduleResolution Bundler --module ESNext",
+    "build": "vite build && tsc -p tsconfig-emitDeclarationOnly.json",
     "serve": "vite preview",
     "publish": "npm publish"
   },
@@ -26,7 +26,8 @@
   "devDependencies": {
     "typescript": "^5.4.4",
     "vite": "^5.4.2",
-    "vitest": "^2.0.5"
+    "vitest": "^2.0.5",
+    "@types/node": "^22.13.14"
   },
   "publishConfig": {
     "access": "public"

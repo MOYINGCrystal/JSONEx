@@ -1,0 +1,38 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": true,
+        "declaration": true,
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "esModuleInterop": true,
+        "noEmitOnError": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "outDir": "dist",
+        "baseUrl": ".",
+        "strict": true,
+        "skipLibCheck": true,
+        "lib": [
+            "DOM",
+            "ES5",
+            "ES6",
+            "ES2015.promise",
+            "ES2018.promise",
+            "ES2015.iterable"
+        ],
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        },
+        "emitDeclarationOnly": true,
+        "declarationDir": "dist"
+    },
+    "files": [
+        "src/JSONEx.ts"
+    ]
+}
